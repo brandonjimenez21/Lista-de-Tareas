@@ -1,0 +1,1 @@
+export const routesNames = ["home", "about", "taskList", "login", "register", "reset-password", "profile", "sitemap"]

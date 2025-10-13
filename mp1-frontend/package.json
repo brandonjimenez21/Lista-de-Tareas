@@ -1,0 +1,20 @@
+{
+  "name": "mp1-fronted",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "postbuild": "node generate-sitemap.js",
+    "sitemap": "node generate-sitemap.js",
+    "preview": "vite preview",
+    "docs": "jsdoc -c jsdoc.json"
+  },
+  "devDependencies": {
+    "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "jsdoc": "^4.0.4"
+  }
+}

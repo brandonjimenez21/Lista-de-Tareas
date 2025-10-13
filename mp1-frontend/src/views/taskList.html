@@ -1,0 +1,112 @@
+<section>
+  <a href="#/taskNew" class="btn-new-task">Nueva Tarea</a>
+  <section id="task-list">
+    <div class="board">
+      <div class="column">
+        <h2 class="To do">Por hacer</h2>
+        <div class="tasks" id="todo">
+          <div class="task-loader"></div>
+          <div class="task-loader"></div>
+          <div class="task-loader"></div>
+        </div>
+      </div>
+
+      <div class="column">
+        <h2 class="in-progress">En progreso</h2>
+        <div class="tasks" id="in-progress">
+          <div class="task-loader"></div>
+          <div class="task-loader"></div>
+          <div class="task-loader"></div>
+        </div>
+      </div>
+
+      <div class="column">
+        <h2 class="completed">Completadas</h2>
+        <div class="tasks" id="done">
+          <div class="task-loader"></div>
+          <div class="task-loader"></div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- Modal -->
+<div id="taskModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Crear Nueva Tarea</h2>
+    <form id="taskForm" class="task-form">
+      <div class="form-group">
+        <label for="title">Título *</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          maxlength="50"
+          required
+          placeholder="Ingresa el título de la tarea"
+        />
+        <span class="char-count" id="title-count">0/50</span>
+      </div>
+
+      <div class="form-group">
+        <label for="detail">Detalle</label>
+        <textarea
+          id="detail"
+          name="detail"
+          maxlength="500"
+          rows="4"
+          placeholder="Descripción detallada de la tarea (opcional)"
+        ></textarea>
+        <span class="char-count" id="detail-count">0/500</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">Fecha</label>
+          <input type="date" id="date" name="date" required />
+        </div>
+
+        <div class="form-group">
+          <label for="time">Hora</label>
+          <input type="time" id="time" name="time" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <select id="status" name="status" required>
+          <option value="todo">Por hacer</option>
+          <option value="in-progress">Haciendo</option>
+          <option value="done">Hecho</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" id="closeModalBtn" class="btn btn-secondary">
+          Cancelar
+        </button>
+        <button id="submitTask" type="submit" class="btn btn-primary">Crear Tarea</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal delete-->
+<div id="taskDeleteModal" class="task-modal hidden">
+  <div class="task-modal-content">
+    <h2 class="task-modal-title">⚠️ Eliminar tarea</h2>
+    <p class="task-modal-text">
+      ¿Seguro que deseas eliminar esta tarea? Esta acción no se puede deshacer.
+    </p>
+    <div class="task-modal-actions">
+      <button id="cancelTaskDelete" class="task-btn task-btn-cancel">
+        Cancelar
+      </button>
+      <button id="confirmTaskDelete" class="task-btn task-btn-danger">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/routes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/routes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { renderLayout, renderAuthLayout } from "../layouts";
+import { renderTaskList } from "../components/taskList";
+import { renderRegister } from "../components/register";
+import { renderLogin } from "../components/login";
+import { openModal, closeModal } from "../components/modal";
+import { setupTaskForm } from "../components/taskNew.js";
+import { getTasks } from "../api/tasks.js";
+
+const app = document.getElementById("app");
+
+/**
+ * @typedef {Object} Route
+ * @property {string} file - The HTML file to load for this route.
+ * @property {Function|null} init - Initialization function for the view (optional).
+ * @property {Function} layout - Layout renderer function (wraps the view HTML).
+ */
+
+/**
+ * Build a safe URL for fetching view fragments inside Vite (dev and build).
+ *
+ * @param {string} name - The name of the view (without extension).
+ * @returns {URL} The resolved URL for the view HTML file.
+ *
+ * @example
+ * const url = viewURL("login");
+ * // => URL object pointing to ../views/login.html
+ */
+
+const viewURL = (name) => new URL(`../views/${name}.html`, import.meta.url);
+
+/**
+ * Map of available application routes.
+ * Each route defines which HTML file to load, which layout to use, and an optional initializer.
+ *
+ * @type {Object.&lt;string, Route>}
+ */
+
+export const routes = {
+  home: {
+    file: "home.html",
+    init: initHome,
+    layout: renderLayout,
+  },
+  taskList: {
+    file: "taskList.html",
+    init: initBoard,
+    layout: renderLayout,
+  },
+  "login": {
+    file: "login.html",
+    init: renderLogin,
+    layout: renderAuthLayout,
+  },
+  "register": {
+    file: "register.html",
+    init: renderRegister,
+    layout: renderAuthLayout,
+  },
+  "reset-password": {
+    file: "reset-password.html",
+    init: null,
+    layout: renderAuthLayout,
+  },
+  taskNew: {
+    file: "taskNew.html",
+    init: initTaskNew,
+    layout: renderLayout,
+  },
+};
+
+/**
+ * Open the "new task" modal.
+ *
+ * This function:
+ *  - Fetches the HTML fragment for the new task form.
+ *  - Renders it inside a modal via {@link openModal}.
+ *  - Sets up cancel and submit handlers.
+ *
+ * @async
+ * @returns {Promise&lt;void>}
+ */
+
+async function openTaskNewModal() {
+  console.log("=== openTaskNewModal ejecutándose ===");
+  // 1) Traer el HTML del formulario existente
+  const res = await fetch(new URL(`../views/taskNew.html`, import.meta.url));
+  const html = await res.text();
+
+  openModal(html);
+
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("date")?.setAttribute("min", today);
+
+  // Cancel button handler
+  const cancelBtn = document.getElementById("cancel-btn");
+  console.log("Botón cancelar encontrado:", cancelBtn);
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeModal();
+    });
+  } else {
+    console.error("Botón cancel-btn no encontrado");
+  }
+
+  const form = document.getElementById("task-form");
+  const { createTask } = await import("../api/tasks.js");
+  const { showToast } = await import("../utils/toasts.js");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const taskData = {
+      title: fd.get("title"),
+      detail: fd.get("detail"),
+      date: fd.get("date"),
+      time: fd.get("time"),
+      status: fd.get("status"),
+      dueDate: new Date(`${fd.get("date")}T${fd.get("time")}`),
+    };
+    try {
+      await createTask(taskData);
+      showToast("Tarea creada exitosamente", "success");
+      initBoard();
+      closeModal();
+    } catch {
+      showToast("Error al crear la tarea", "error");
+    }
+  });
+
+  cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeModal();
+  });
+}
+
+/**
+ * Load a given view into the #app container.
+ *
+ * @async
+ * @param {string} name - Route name (must exist in {@link routes}).
+ * @returns {Promise&lt;void>}
+ * @throws {Error} If the route or view file cannot be found.
+ */
+
+export async function loadView(name) {
+  const route = routes[name];
+  const app = document.getElementById("app");
+
+  if (!route) {
+    throw new Error(`Route not found: ${name}`);
+  }
+
+  try {
+    // view HTML
+    const res = await fetch(viewURL(name));
+    if (!res.ok) throw new Error(`Failed to load view: ${name}`);
+    const html = await res.text();
+
+    // Render with layout
+    app.innerHTML = route.layout ? route.layout(html) : html;
+    
+
+    // Run initializer
+    if (typeof route.init === "function") {
+      route.init();
+    }
+  } catch (err) {
+    console.error(err);
+    app.innerHTML = `
+      &lt;p style="color:#ffb4b4">Error loading the view "${name}"&lt;/p>
+    `;
+  }
+}
+
+/**
+ * Initialize the home view.
+ * (Currently placeholder logic.)
+ */
+
+function initHome() {
+  console.log("Home view initialized");
+  // lógica específica para la vista de inicio
+}
+
+export async function initBoard() {
+  const tasks = await getTasks()
+
+  renderTaskList(tasks);
+  console.log("Board view initialized");
+
+  // Button inside the task list view
+  const btn = document.getElementById("btn-new-task");
+  if (btn)
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openTaskNewModal();
+    });
+
+  // Header link "+ New Task"
+  const headerBtn = document.querySelector("a.btn-new-task");
+  if (headerBtn)
+    headerBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openTaskNewModal();
+    });
+}
+
+/**
+ * Initialize the hash-based router.
+ * Attaches a hashchange listener and performs the first render.
+ *
+ * @function
+ */
+export function initRouter() {
+  window.addEventListener("hashchange", handleRoute);
+  handleRoute(); // first render
+}
+
+/**
+ * Handle the current route based on location.hash.
+ * Enforces authentication rules (redirects based on token presence).
+ *
+ * @private
+ */
+function handleRoute() {
+  const token = localStorage.getItem("token"); // token
+
+  const path =
+    (location.hash.startsWith("#/") ? location.hash.slice(2) : "") || "login";
+  console.log(`Routing to: ${path}`);
+
+  // If no token and path requires auth, redirect to login
+  if (!token &amp;&amp; path !== "login" &amp;&amp; path !== "register" &amp;&amp; path !== "reset-password") {
+    location.hash = "#/login";
+    return;
+  }
+
+  // If token exists and path is login/register/reset, redirect home
+  if (token &amp;&amp; (path === "login" || path === "register" || path === "reset-password")) {
+    location.hash = "#/home";
+    
+    return;
+  }
+
+  // Use valid route or fallback to login
+  const route = routes[path] ? path : "login";
+
+  loadView(route).catch((err) => {
+    console.error(err);
+    app.innerHTML = `&lt;p style="color:#ffb4b4">Error loading the view.&lt;/p>`;
+  });
+}
+
+/**
+ * Initialize the "New Task" view directly (non-modal).
+ */
+function initTaskNew() {
+  setupTaskForm();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-layouts.html">layouts</a></li></ul><h3>Namespaces</h3><ul><li><a href="Icons.html">Icons</a></li></ul><h3>Global</h3><ul><li><a href="global.html#TaskCard">TaskCard</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#formatStatus">formatStatus</a></li><li><a href="global.html#getTasks">getTasks</a></li><li><a href="global.html#initHome">initHome</a></li><li><a href="global.html#initRouter">initRouter</a></li><li><a href="global.html#initTaskNew">initTaskNew</a></li><li><a href="global.html#loadView">loadView</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openTaskNewModal">openTaskNewModal</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#renderAuthLayout">renderAuthLayout</a></li><li><a href="global.html#renderLayout">renderLayout</a></li><li><a href="global.html#renderLogin">renderLogin</a></li><li><a href="global.html#renderRegister">renderRegister</a></li><li><a href="global.html#renderTaskList">renderTaskList</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#setupCounter">setupCounter</a></li><li><a href="global.html#setupTaskForm">setupTaskForm</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#viewURL">viewURL</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Sep 14 2025 14:17:30 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

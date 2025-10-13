@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "checkJs": false,
+        "strictNullChecks": false,
+        "strictFunctionTypes": false
+    },
+    "exclude": ["node_modules", "dist"]
+}

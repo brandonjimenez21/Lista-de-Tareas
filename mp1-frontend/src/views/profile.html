@@ -1,0 +1,61 @@
+<section class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <img src="/profile.png" alt="Foto de perfil" class="profile-avatar" />
+    </div>
+    
+    <div class="profile-body">
+      <div id="profile-loader" class="spinner lg"></div>
+      <div id="profile-info" class="profile-info hidden">
+        <h2 class="profile-name" id="profile-name"></h2>
+        <p class="profile-email" id="profile-email"></p>
+        <h3>Información personal</h3>
+        <p><strong>Edad:</strong> <span id="profile-age"></span></p>
+        <p><strong>Fecha de creacion:</strong> <span id="profile-create"></span></p>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn btn-edit">Editar perfil</button>
+        <button class="btn btn-logout">Eliminar perfil</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal Editar Perfil -->
+<div id="profileEditModal" class="profile-modal hidden">
+  <div class="profile-modal-content">
+    <span class="profile-modal-close" id="closeModal">&times;</span>
+    <h2>Editar Perfil</h2>
+
+    <form id="editProfileForm">
+      <label for="firstName">Nombre:</label>
+      <input type="text" id="firstName" name="firstName" required />
+
+      <label for="lastName">Apellido:</label>
+      <input type="text" id="lastName" name="lastName" required />
+
+      <label for="email">Email:</label>
+      <input type="text" id="emailEdit" name="email" required />
+
+      <label for="age">Edad:</label>
+      <input type="number" id="ageInput" name="age" min="0" required />
+
+      <button id="update-profile-btn" type="submit" class="btn btn-save">Guardar cambios</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal eliminar perfil-->
+<div id="modal-delete-profile" class="modal-profile">
+  <div class="modal-profile-content">
+    <h3>Confirmar eliminación</h3>
+    <p>Para eliminar tu perfil, por favor ingresa tu contraseña:</p>
+    <input type="password" id="delete-password" placeholder="Contraseña" />
+
+    <div class="modal-profile-actions">
+      <button id="cancel-delete" class="btn-cancel">Cancelar</button>
+      <button id="confirm-delete" class="btn-confirm">Eliminar</button>
+    </div>
+  </div>
+</div>

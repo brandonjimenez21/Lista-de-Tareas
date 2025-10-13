@@ -1,0 +1,60 @@
+/* Contenedor principal del sitemap */
+.sitemap-view {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, sans-serif;
+}
+
+/* Título */
+.sitemap-view h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Subtítulo */
+.sitemap-view p {
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Lista */
+.sitemap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Cada enlace */
+.sitemap-list li {
+  background: #f9f9f9;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.sitemap-list li:hover {
+  background: #eef5ff;
+  transform: translateX(4px);
+}
+
+/* Enlaces */
+.sitemap-list a {
+  color: #3498db;
+  font-weight: 500;
+  text-decoration: none;
+  display: block;
+}
+
+.sitemap-list a:hover {
+  text-decoration: underline;
+}

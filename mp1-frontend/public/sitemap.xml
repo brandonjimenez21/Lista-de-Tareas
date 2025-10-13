@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/about</loc>
+        <lastmod>2025-09-26T06:03:13.697Z</lastmod>
+      </url>
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/home</loc>
+        <lastmod>2025-09-26T06:03:13.698Z</lastmod>
+      </url>
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/login</loc>
+        <lastmod>2025-09-26T06:03:13.698Z</lastmod>
+      </url>
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/profile</loc>
+        <lastmod>2025-09-26T06:03:13.698Z</lastmod>
+      </url>
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/register</loc>
+        <lastmod>2025-09-26T06:03:13.698Z</lastmod>
+      </url>
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/reset-password</loc>
+        <lastmod>2025-09-26T06:03:13.698Z</lastmod>
+      </url>
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/sitemap</loc>
+        <lastmod>2025-09-26T06:03:13.698Z</lastmod>
+      </url>
+    
+      <url>
+        <loc>https://taskio-mp1.vercel.app/#/taskList</loc>
+        <lastmod>2025-09-26T06:03:13.698Z</lastmod>
+      </url>
+    
+  </urlset>

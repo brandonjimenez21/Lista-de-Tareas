@@ -1,0 +1,42 @@
+{
+  "name": "mp1-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.1",
+    "nodemailer": "^7.0.6",
+    "nodemon": "^3.1.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pi-mp1/mp1-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pi-mp1/mp1-backend/issues"
+  },
+  "homepage": "https://github.com/pi-mp1/mp1-backend#readme",
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "jsdoc": "^4.0.4",
+    "jsdoc-babel": "^0.5.0",
+    "typedoc": "^0.28.13",
+    "typescript": "^5.9.2"
+  }
+}

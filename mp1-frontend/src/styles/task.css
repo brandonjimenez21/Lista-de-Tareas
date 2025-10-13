@@ -1,0 +1,28 @@
+div.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+div.task-loader {
+    width: 100%;
+    height: 100px;
+    background-color: #f0f0f0;
+}
+
+.btn-new-task {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  margin-left: 16px;
+  background: var(--blue); /* azul llamativo */
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-new-task:hover {
+  background: var(--blue-hover);
+  transform: translateY(-2px);
+}

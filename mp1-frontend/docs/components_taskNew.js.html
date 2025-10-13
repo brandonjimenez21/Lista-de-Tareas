@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/taskNew.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/taskNew.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { createTask } from "../api/tasks.js";
+import { initBoard } from "../routes/routes.js";
+import { showToast } from "../utils/toasts.js";
+
+/**
+ * @typedef {Object} TaskData
+ * @property {string} title - The title of the task (1–50 characters).
+ * @property {string} detail - The detailed description of the task (up to 500 characters).
+ * @property {string} date - The due date in YYYY-MM-DD format.
+ * @property {string} time - The due time in HH:mm format.
+ * @property {"todo"|"in-progress"|"done"} status - The current status of the task.
+ * @property {Date} dueDate - A Date object combining date and time.
+ */
+
+/**
+ * Initialize the task creation form.
+ *
+ * This function:
+ *  - Sets up real-time validation and character counters for title and detail inputs.
+ *  - Handles form submission:
+ *    - Collects form data and builds a {@link TaskData} object.
+ *    - Calls {@link createTask} to save the task in the backend.
+ *    - Displays success or error messages using {@link showToast}.
+ *    - Reloads the page after a successful task creation.
+ *  - Handles the cancel button to close the modal.
+ *
+ * @function
+ * @returns {void} Updates the DOM and interacts with backend APIs.
+ *
+ * @example
+ * // HTML:
+ * &lt;form id="task-form">
+ *   &lt;input id="title" name="title" maxlength="50" required />
+ *   &lt;span id="title-count">&lt;/span>
+ *   &lt;textarea id="detail" name="detail" maxlength="500">&lt;/textarea>
+ *   &lt;span id="detail-count">&lt;/span>
+ *   &lt;input id="date" type="date" name="date" required />
+ *   &lt;input id="time" type="time" name="time" required />
+ *   &lt;select id="status" name="status">
+ *     &lt;option value="todo">To do&lt;/option>
+ *     &lt;option value="in-progress">In progress&lt;/option>
+ *     &lt;option value="done">Done&lt;/option>
+ *   &lt;/select>
+ *   &lt;button type="submit">Create Task&lt;/button>
+ *   &lt;button type="button" id="cancel-btn">Cancel&lt;/button>
+ * &lt;/form>
+ * &lt;div id="modal-task" class="hidden">&lt;/div>
+ *
+ * // JS:
+ * setupTaskForm();
+ */
+
+export function setupTaskForm() {
+  const form = document.getElementById("task-form");
+  const titleInput = document.getElementById("title");
+  const detailInput = document.getElementById("detail");
+  const titleCount = document.getElementById("title-count");
+  const detailCount = document.getElementById("detail-count");
+  const cancelBtn = document.getElementById("cancel-btn");
+  const taskModal = document.getElementById("modal-task");
+
+  // title validation real time
+  titleInput.addEventListener("input", () => {
+    validateTitle(titleInput);
+    titleCount.textContent = `${titleInput.value.length}/50`;
+  });
+
+  // real-time detail character count
+  detailInput.addEventListener("input", () => {
+    detailCount.textContent = `${detailInput.value.length}/500`;
+  });
+
+  // form submission handler
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    const taskData = {
+      title: formData.get("title"),
+      detail: formData.get("detail"),
+      date: formData.get("date"),
+      time: formData.get("time"),
+      status: formData.get("status"),
+      dueDate: new Date(`${formData.get("date")}T${formData.get("time")}`),
+    };
+
+    try {
+      await createTask(taskData);
+      console.log("Refrescando el tablero...");
+      showToast("Tarea creada exitosamente", "success");
+      location.reload();
+      
+
+    } catch (error) {
+      showToast("Error al crear la tarea", "error");
+    }
+  });
+
+  // cancel button handler
+  cancelBtn.addEventListener("click", () => {
+    taskModal.classList.add("hidden");
+  });
+
+  // Internal validation helper
+  function validateTitle(input) {
+    const isValid = input.value.length > 0 &amp;&amp; input.value.length &lt;= 50;
+    input.setCustomValidity(
+      isValid ? "" : "El título debe tener entre 1 y 50 caracteres"
+    );
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-layouts.html">layouts</a></li></ul><h3>Namespaces</h3><ul><li><a href="Icons.html">Icons</a></li></ul><h3>Global</h3><ul><li><a href="global.html#TaskCard">TaskCard</a></li><li><a href="global.html#closeModal">closeModal</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#formatStatus">formatStatus</a></li><li><a href="global.html#getTasks">getTasks</a></li><li><a href="global.html#initHome">initHome</a></li><li><a href="global.html#initRouter">initRouter</a></li><li><a href="global.html#initTaskNew">initTaskNew</a></li><li><a href="global.html#loadView">loadView</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openTaskNewModal">openTaskNewModal</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#renderAuthLayout">renderAuthLayout</a></li><li><a href="global.html#renderLayout">renderLayout</a></li><li><a href="global.html#renderLogin">renderLogin</a></li><li><a href="global.html#renderRegister">renderRegister</a></li><li><a href="global.html#renderTaskList">renderTaskList</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#setupCounter">setupCounter</a></li><li><a href="global.html#setupTaskForm">setupTaskForm</a></li><li><a href="global.html#showToast">showToast</a></li><li><a href="global.html#viewURL">viewURL</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Sep 14 2025 14:17:30 GMT-0500 (hora estándar de Colombia)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
