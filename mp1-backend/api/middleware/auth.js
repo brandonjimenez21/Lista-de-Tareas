@@ -25,11 +25,6 @@ const jwt = require("jsonwebtoken");
 
 function authMiddleware(req, res, next) {
 
-  // PERMITIR PREFLIGHT
-  if (req.method === "OPTIONS") {
-    return next();
-  }
-
   const token = req.cookies?.token;
 
   if (!token) {
