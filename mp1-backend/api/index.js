@@ -26,7 +26,7 @@ app.set("trust proxy", 1);
  * @constant {string[]}
  */
 const allowedOrigins = [
-  "https://taskio-mp1.vercel.app",
+  "https://fullglass.vercel.app",
   "http://localhost:5173",
 ];
 
