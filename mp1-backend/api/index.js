@@ -26,13 +26,21 @@ app.set("trust proxy", 1);
  * @constant {string[]}
  */
 const allowedOrigins = [
+  process.env.FRONTEND_URL, // load from .env so production frontend is allowed
   "https://fullglass.vercel.app",
   "http://localhost:5173",
-];
+].filter(Boolean);
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // allow requests with no origin (e.g., mobile apps, curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        return callback(null, true);
+      }
+      return callback(new Error("CORS policy: This origin is not allowed."));
+    },
     credentials: true,
   })
 );
