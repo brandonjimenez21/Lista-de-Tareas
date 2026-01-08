@@ -25,7 +25,12 @@ const jwt = require("jsonwebtoken");
 
 function authMiddleware(req, res, next) {
 
-  const token = req.cookies.token;
+  // PERMITIR PREFLIGHT
+  if (req.method === "OPTIONS") {
+    return next();
+  }
+
+  const token = req.cookies?.token;
 
   if (!token) {
     return res.status(401).json({ message: "Access denied, token missing" });
