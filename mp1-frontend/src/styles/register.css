@@ -1,59 +1,24 @@
-/* Estilos para mensajes de error en el formulario de registro */
+/* Mensajes de error */
 .error-message {
   color: #e74c3c;
   font-size: 0.75rem;
-  margin-top: 0.25rem;
-  display: block;
-  min-height: 1.25rem;
+  margin-top: 4px;
+  min-height: 1.2em;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .error-message {
-    display: none;
-  }
-}
-
-.input-group input {
-  width: 100%;
-}
-
-.input-group.flex {
-  display: flex;
-  gap: 0.75rem;
-}
-
-@media (max-width: 480px) {
-  .input-group.flex {
-    flex-direction: column;
-  }
-}
-
-.error-message.responsive {
-  display: block;
-}
-
-/* Estilos para el botón deshabilitado */
-.btn:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* Estilos para campos con error */
+/* Estados */
 input.error {
   border-color: #e74c3c;
   box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
 }
 
-/* Estilos para campos válidos */
 input.valid {
   border-color: #27ae60;
   box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.2);
 }
 
-@media (max-width: 768px) {
-  .error-message.responsive {
-    display: none;
-  }
+/* Botón deshabilitado */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
