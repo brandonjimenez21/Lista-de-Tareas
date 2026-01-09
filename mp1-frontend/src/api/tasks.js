@@ -23,7 +23,7 @@ const API = import.meta.env.VITE_API_URL;
  * console.log(tasks.length); // → number of tasks
  */
 export async function getTasks() {
-  const res = await fetch("https://lista-de-tareas-6744.onrender.com/api/tasks", {
+  const res = await fetch(`${API}/tasks`, {
     method: "GET",
     credentials: "include", // la cookie se manda sola
   });

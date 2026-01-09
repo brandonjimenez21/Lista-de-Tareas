@@ -1,15 +1,15 @@
 <section id="modal-task">
-    <h2 id="title_h2">Crear Nueva Tarea</h2>
+    <h2 id="title_h2">Registrar Nuevo Producto</h2>
     <form id="task-form" class="task-form">
         <div class="form-group">
-            <label for="title">Título</label>
+            <label for="title">Nombre</label>
             <input type="text" id="title" name="title" maxlength="50" required
                 placeholder="Ingresa el título de la tarea" />
             <span class="char-count" id="title-count">0/50</span>
         </div>
 
         <div class="form-group">
-            <label for="detail">Detalle</label>
+            <label for="detail">Descripción</label>
             <textarea id="detail" name="detail" maxlength="500" rows="4"
                 placeholder="Descripción detallada de la tarea (opcional)"></textarea>
             <span class="char-count" id="detail-count">0/500</span>
@@ -22,8 +22,8 @@
             </div>
 
             <div class="form-group">
-                <label for="time">Hora</label>
-                <input type="time" id="time" name="time" required />
+                <label for="time">Cantidad</label>
+                <input type="number" id="time" name="time" required />
             </div>
         </div>
 
@@ -31,8 +31,8 @@
             <label for="status">Estado</label>
             <select id="status" name="status" required>
                 <option value="todo">Por hacer</option>
-                <option value="in-progress">Haciendo</option>
-                <option value="done">Hecho</option>
+                <option value="in-progress">En Progreso</option>
+                <option value="done">Completadas</option>
             </select>
         </div>
 

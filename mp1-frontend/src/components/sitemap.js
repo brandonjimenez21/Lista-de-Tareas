@@ -11,7 +11,8 @@ export function renderSitemap() {
 
       urls.forEach((loc) => {
         const li = document.createElement("li");
-        const linkText = loc.textContent.split("#")[1];
+        // Limpia el prefijo hasta "#/"
+        const linkText = loc.textContent.replace(/^.*#\//, "");
         li.innerHTML = `<a href="${loc.textContent}" target="_blank">${linkText}</a>`;
         list.appendChild(li);
       });

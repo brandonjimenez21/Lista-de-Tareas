@@ -130,8 +130,8 @@ export async function openTaskNewModal(task = null) {
     form.querySelector("#status").value = task.status;
   } else {
     // Modo crear
-    titleH2.textContent = "Crear Nueva Tarea";
-    buttonTask.textContent = "Crear Tarea";
+    titleH2.textContent = "Registrar Nuevo Producto";
+    buttonTask.textContent = "Crear Producto";
   }
 
   // 5) Cancelar

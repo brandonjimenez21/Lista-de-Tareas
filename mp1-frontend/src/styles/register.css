@@ -1,10 +1,32 @@
 /* Estilos para mensajes de error en el formulario de registro */
 .error-message {
   color: #e74c3c;
-  font-size: 0.5rem;
+  font-size: 0.75rem;
   margin-top: 0.25rem;
   display: block;
   min-height: 1.25rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .error-message {
+    display: none;
+  }
+}
+
+.input-group input {
+  width: 100%;
+}
+
+.input-group.flex {
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .input-group.flex {
+    flex-direction: column;
+  }
 }
 
 .error-message.responsive {
